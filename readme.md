@@ -35,7 +35,7 @@ python manage.py runserver
 
 The database includes a superuser account:
 - Username: `admin`
-- Password: `admin123`
+- Password: `admin321`
 
 Visit http://127.0.0.1:8000/admin/ to access the admin interface.
 
