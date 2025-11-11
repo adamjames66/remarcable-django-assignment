@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fast Food Chains Directory</title>
+</head>
+<body>
+    <h1>Fast Food Chains Directory</h1>
+    
+    <!-- Search and Filter Form -->
+    <form method="GET">
+        
+        <!-- Search Box -->
+        <div>
+            <label>Search by description:</label>
+            <input type="text" name="search" value="{{ search_query }}" placeholder="e.g., chicken, burgers">
+        </div>
+        
+        <!-- Category Dropdown -->
+        <div>
+            <label>Filter by category:</label>
+            <select name="category">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id|stringformat:"s" == selected_category %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <!-- Tag Checkboxes -->
+        <div>
+            <label>Filter by tags:</label>
+            {% for tag in tags %}
+                <label>
+                    <input type="checkbox" name="tags" value="{{ tag.id }}" {% if tag.id in selected_tags %}checked{% endif %}>
+                    {{ tag.name }}
+                </label>
+            {% endfor %}
+        </div>
+        
+        <!-- Submit Buttons -->
+        <button type="submit">Apply Filters</button>
+        <a href="{% url 'chain_list' %}"><button type="button">Clear All</button></a>
+        
+    </form>
+    
+    <hr>
+    
+    <!-- Results -->
+    <h2>Results: {{ chains.count }} chain{{ chains.count|pluralize }}</h2>
+    
+    {% if chains %}
+        {% for chain in chains %}
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+                <h3>{{ chain.name }}</h3>
+                <p><strong>Category:</strong> {{ chain.category.name }}</p>
+                <p>{{ chain.description }}</p>
+                <p><strong>Tags:</strong> 
+                    {% for tag in chain.tags.all %}
+                        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No chains found. Try different filters.</p>
+    {% endif %}
+    
+</body>
+</html>
