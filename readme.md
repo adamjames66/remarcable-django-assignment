@@ -1,5 +1,3 @@
-## Quick Start (Using Pre-populated Database)
-
 This repository includes a pre-populated SQLite database with sample data. To run the project immediately:
 
 1. Clone the repository:
